@@ -8,7 +8,6 @@ from datetime import datetime
 import asyncio
 import re
 
-
 intents = discord.Intents.default() # Подключаем "Разрешения"
 intents.message_content = True
 intents.messages = True
@@ -16,6 +15,25 @@ intents.guilds = True
 intents.members = True
 # Задаём префикс и интенты
 bot = commands.Bot(command_prefix=config.PREFIX, intents=intents)
+
+def incorrect_chanel(user_id):
+    res = (f'***<@{user_id}> получил от воображаемого официанта свой воображаемый заказ...\n'
+           f'А вот если бы заказ был сделан в нужном месте то тут не попахивало бы дуркой...\n'
+           f'Или запрещеннымы веществами...***')
+    return res
+
+def boy_waiter(user_id):
+    res = (f'*К столу быстрой походкой приблизился официант. Ловким движением поставив тарелку перед '
+           f'<@{user_id}>, он на одном дыхании выпалил:***\n'
+           f'— Прошу, ваш заказ! Приятного аппетита!***\n'
+           f'…и тут же скрылся среди других столиков.*')
+    return res
+
+def girl_waitress(user_id):
+    res = (f'*Лёгким шагом к столу приблизилась симпатичная официантка, бережно удерживая запотевший бокал. '
+           f'Опустив его перед <@{user_id}>, она полушепотом промолвила:*\n**— Ваш напиток. Наслаждайтесь..**\n'
+           f'Даже не дожидаясь ответа, она подарила беглую улыбку и тут же упорхнула к следующему столику.*')
+    return res
 
 @bot.event
 async def on_ready():
@@ -124,15 +142,10 @@ async def generate_bubuivol_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Сэндвич с мясом бубуйвола.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='бубуйвол')
@@ -149,15 +162,10 @@ async def generate_soup_seven_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Суп из семи видов мяса.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='суп-семь')
@@ -174,15 +182,10 @@ async def generate_deer_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Стейк из оленины под голубичным соусом.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='стейк-оленина')
@@ -199,15 +202,10 @@ async def generate_porridge_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Овсяная каша.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='каша')
@@ -224,15 +222,10 @@ async def generate_porridge_dop_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Овсяная каша с ягодами и орехами.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='каша-доп')
@@ -249,15 +242,10 @@ async def generate_cream_soup_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Сырный крем суп.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='крем-суп')
@@ -274,15 +262,10 @@ async def generate_doe_doe_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Сэндвич из копчёного мяса доу-доу.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='доу-доу')
@@ -299,15 +282,10 @@ async def generate_mushroom_soup_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Суп из весёлых грибов.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='суп-грибной')
@@ -324,15 +302,10 @@ async def generate_dragon_steak_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Драконий стейк.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='стейк-дракон')
@@ -349,15 +322,10 @@ async def generate_crab_salad_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Салат с мясом лазурного краба.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='салат-краб')
@@ -374,15 +342,10 @@ async def generate_dumplings_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Пельмени из щуки с салом.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='пельмени')
@@ -399,15 +362,10 @@ async def generate_sausage_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DISHES_PATH + r'\Кровяная колбаса с салом.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='колбаса')
@@ -425,15 +383,10 @@ async def generate_green_tea_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Зеленый чай.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='зеленый-чай')
@@ -450,15 +403,10 @@ async def generate_black_tea_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Черный чай.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='черный-чай')
@@ -475,15 +423,10 @@ async def generate_cocktail_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Молочный коктейль.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='коктейль')
@@ -500,15 +443,10 @@ async def generate_hot_chocolate_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Горячий шоколад.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='горячий-шоколад')
@@ -525,15 +463,10 @@ async def generate_light_beer_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\СВЕТлое пиво.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='свет')
@@ -550,15 +483,10 @@ async def generate_dark_beer_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\ТЕМНое пиво.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='тьма')
@@ -575,15 +503,10 @@ async def generate_pear_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Грушевый кальвадос.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='груша')
@@ -600,15 +523,10 @@ async def generate_dryad_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Поцелуй дриады.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='дриада')
@@ -625,15 +543,10 @@ async def generate_grail_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Золотой грааль.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='грааль')
@@ -650,15 +563,10 @@ async def generate_limon_twist_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DRINK_PATH + r'\Лимонный твист.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках поднос с напитком, после чего поставил его перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам времопровождения!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(girl_waitress(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='твист')
@@ -676,15 +584,10 @@ async def generate_dragon_fruit_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Драконий фрукт.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='дракон')
@@ -701,15 +604,10 @@ async def generate_melon_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Лунная апельсиновая дыня.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='дыня')
@@ -726,15 +624,10 @@ async def generate_star_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Космическая звездочка.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='звездочка')
@@ -751,15 +644,10 @@ async def generate_sorbet_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Лимонный сорбет.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='сорбет')
@@ -776,15 +664,10 @@ async def generate_unicorn_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Единорогова блевота.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='единорог')
@@ -801,15 +684,10 @@ async def generate_brownie_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Брауни.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='брауни')
@@ -826,15 +704,10 @@ async def generate_souffle_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Яблочное суфле с грушей.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='суфле')
@@ -851,15 +724,10 @@ async def generate_jelly_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Желе из медового пива.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='желе')
@@ -876,15 +744,10 @@ async def generate_abyss_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Синяя бездна небесный вкус.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='бездна')
@@ -901,15 +764,10 @@ async def generate_ruby_and_respond(interaction: discord.Interaction):
     elif interaction.channel.id in config.TAVERN_ID:
         user_id = interaction.user.id  # ID пользователя
         file_menu = discord.File(config.DESSERT_PATH + r'\Красный рубин вкус страсти.jpg', filename="image.jpg")
-        await interaction.followup.send('***Подбижал мальчишка, неся в руках заказ, после чего поставил тарелку перед '
-                                                f'<@{user_id}> и протораторил***\n- Прошу, приятного вам аппетита!\n'
-                                                '***После чего сразу убежал дальше работать***', file=file_menu)
+        await interaction.followup.send(boy_waiter(user_id), file=file_menu)
     else:
         user_id = interaction.user.id  # ID пользователя
-        await interaction.followup.send(f'***<@{user_id}> получил от воображаемого официанта свой воображаемый '
-                                                f'заказ... А вот если бы заказ был сделан в нужном месте '
-                                                f'то тут не попахивало бы дуркой... Или запрещеннымы веществами... '
-                                                f'***')
+        await interaction.followup.send(incorrect_chanel(user_id))
 
 
 @bot.tree.command(name='рубин')
