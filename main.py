@@ -8,6 +8,7 @@ from datetime import datetime
 import asyncio
 import re
 
+
 intents = discord.Intents.default() # Подключаем "Разрешения"
 intents.message_content = True
 intents.messages = True
