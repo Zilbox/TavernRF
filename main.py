@@ -1,12 +1,18 @@
-# 1174448383394590790
 import config
-import random
-import discord # Подключаем библиотеку
+import discord
 from discord.ext import commands
 from discord import app_commands
-from datetime import datetime
 import asyncio
 import re
+
+
+# Класс для автоматической синхронизации команд при запуске
+class MyBot(commands.Bot):
+    async def setup_hook(self):
+        for guild in self.guilds:
+            await self.tree.sync(guild=guild)
+        print(f"Синхронизировано для {len(self.guilds)} серверов.")
+
 
 intents = discord.Intents.default() # Подключаем "Разрешения"
 intents.message_content = True
@@ -14,14 +20,18 @@ intents.messages = True
 intents.guilds = True
 intents.members = True
 # Задаём префикс и интенты
-bot = commands.Bot(command_prefix=config.PREFIX, intents=intents)
+bot = MyBot(command_prefix=config.PREFIX, intents=intents)
 
+
+# Сообщение если канал не таверна
 def incorrect_chanel(user_id):
     res = (f'***<@{user_id}> получил от воображаемого официанта свой воображаемый заказ...\n'
            f'А вот если бы заказ был сделан в нужном месте то тут не попахивало бы дуркой...\n'
            f'Или запрещеннымы веществами...***')
     return res
 
+
+# Сообщение для официанта
 def boy_waiter(user_id):
     res = (f'*К столу быстрой походкой приблизился официант. Ловким движением поставив тарелку перед '
            f'<@{user_id}>, он на одном дыхании выпалил:*\n'
@@ -29,11 +39,14 @@ def boy_waiter(user_id):
            f'*…и тут же скрылся среди других столиков.*')
     return res
 
+
+# Сообщение для официантки
 def girl_waitress(user_id):
     res = (f'*Лёгким шагом к столу приблизилась симпатичная официантка, бережно удерживая запотевший бокал. '
            f'Опустив его перед <@{user_id}>, она полушепотом промолвила:*\n**— Ваш напиток. Наслаждайтесь..**\n'
            f'*Даже не дожидаясь ответа, она подарила беглую улыбку и тут же упорхнула к следующему столику.*')
     return res
+
 
 @bot.event
 async def on_ready():
@@ -110,12 +123,13 @@ async def generate_menu_and_respond(interaction):
             config.MENU_PATH + r'\Меню2.jpg',
         ]
 
-        # Создайте список файлов
+        # Создание списка файлов
         files = [discord.File(image) for image in images]
 
         await interaction.followup.send(files=files)
     elif interaction.guild_id in config.GUILD_ID:
         user_id = interaction.user.id  # ID пользователя
+        # Сообщение если не верный канал
         await interaction.followup.send(f'***Люди, что находились рядом, посмотрели на <@{user_id}> как на '
                                                 f'идиота. Не каждый день встретишь умника, что пытается попросить '
                                                 f'меню в случайном месте, а не в '
